@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Hamster Clicker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Telegram WebApp JS SDK -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      background: #f5f5f5;
+      color: #333;
+      margin: 0;
+      padding: 30px;
+    }
+    h1 {
+      margin-top: 20px;
+    }
+    button {
+      padding: 20px 40px;
+      font-size: 24px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    #info {
+      margin-top: 30px;
+      font-size: 16px;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <h1>🐹 Hamster Clicker</h1>
+  <p>Кликов: <span id="count">0</span></p>
+  <button onclick="increment()">Клик!</button>
+
+  <div id="info"></div>
+
+  <script>
+    let count = 0;
+
+    function increment() {
+      count++;
+      document.getElementById("count").textContent = count;
+    }
+
+    // Telegram WebApp API
+    const tg = window.Telegram.WebApp;
+    tg.expand(); // Разворачивает WebApp на весь экран
+
+    const infoDiv = document.getElementById("info");
+
+    if (tg.initDataUnsafe && tg.initDataUnsafe.user) {
+      const user = tg.initDataUnsafe.user;
+      infoDiv.textContent = `Вы вошли как: ${user.first_name} (${user.id})`;
+    } else {
+      infoDiv.textContent = "Не удалось получить данные пользователя.";
+    }
+  </script>
+</body>
+</html>
